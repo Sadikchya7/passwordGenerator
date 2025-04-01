@@ -1,0 +1,12 @@
+.upperCase {
+  display: flex;
+}
+.lowerCase {
+  display: flex;
+}
+.number {
+  display: flex;
+}
+.specialChar {
+  display: flex;
+}
