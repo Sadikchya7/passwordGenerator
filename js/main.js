@@ -1,9 +1,7 @@
 const firstDiv = document.getElementById("main");
-console.log("hello world");
 const contentHolder = document.createElement("div");
 contentHolder.classList.add("content");
 contentHolder.id = "content";
-console.log("hello world");
 // create uppercase
 const upperCase = document.createElement("div");
 upperCase.classList.add("upperCase");
@@ -77,7 +75,7 @@ generate.innerHTML = "Generate Password";
 
 generate.addEventListener("click", () => {
   const length = parseInt(passwordNumber.value);
-  console.log(passwordNumber.value);
+  console.log("value" + passwordNumber.value);
 
   const addUpperCase = upperCaseCheckBox.checked;
   const addLowerCase = lowerCaseCheckBox.checked;
@@ -104,29 +102,31 @@ function generatePassword(
   const numberChar = "0123456789";
   const symbolChar = "!@#$%^&*()_+[]{}|;:,.<>?";
 
-  let mixCharacter = "";
-  if (addUpperCase) {
-    mixCharacter += upperCaseChar;
-  }
-  if (addLowerCase) {
-    mixCharacter += lowercaseChar;
-  }
-  if (addNumber) {
-    mixCharacter += numberChar;
-  }
-  if (addSymbol) {
-    mixCharacter += symbolChar;
-  }
-  if (mixCharacter.length == 0 || length == 0) {
-    alert("ENTER A NUMBER PLEASE!!!");
-    return " ";
-  }
-
   let password = "";
+  // debugger;
   for (let i = 0; i < length; i++) {
-    const random = Math.floor(Math.random() * mixCharacter.length);
-    console.log(random);
-    password = password + mixCharacter[random];
+    console.log(i);
+    if (addUpperCase) {
+      password +=
+        upperCaseChar[Math.floor(Math.random() * upperCaseChar.length)];
+    }
+    if (addLowerCase) {
+      password +=
+        lowercaseChar[Math.floor(Math.random() * lowercaseChar.length)];
+    }
+    if (addNumber) {
+      password += numberChar[Math.floor(Math.random() * numberChar.length)];
+    }
+    if (addSymbol) {
+      password += symbolChar[Math.floor(Math.random() * symbolChar.length)];
+    }
+    if (password.length == 0 || length == 0) {
+      alert("ENTER A NUMBER PLEASE!!!");
+      return " ";
+    }
+    console.log(i);
+    console.log(password);
+    // return password;
   }
   return password;
 }
