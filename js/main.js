@@ -49,16 +49,88 @@ const specialCharText = document.createElement("p");
 specialCharText.innerHTML = "Special Character";
 specialChar.appendChild(specialCharText);
 
-const generate = document.createElement("input");
-generate.setAttribute("type", "number");
-generate.id = "generate";
-generate.classList.add("generate");
-generate.placeholder = "Number of password";
+const passwordNumber = document.createElement("input");
+passwordNumber.setAttribute("type", "number");
+passwordNumber.id = "passwordNumber";
+passwordNumber.classList.add("passwordNumber");
+passwordNumber.placeholder = "Number of password";
 
 contentHolder.appendChild(upperCase);
 contentHolder.appendChild(lowerCase);
 contentHolder.appendChild(number);
 contentHolder.appendChild(specialChar);
-contentHolder.appendChild(generate);
+contentHolder.appendChild(passwordNumber);
 
+const password = document.createElement("input");
+password.id = "password";
+password.classList.add("password");
+
+const nextDiv = document.createElement("div");
+const textbox = document.createElement("h4");
+textbox.innerHTML = "Password";
+nextDiv.appendChild(textbox);
+const generate = document.createElement("button");
+generate.type = "button";
+generate.classList.add("generate");
+generate.id = "generate";
+generate.innerHTML = "Generate Password";
+
+generate.addEventListener("click", () => {
+  const length = parseInt(passwordNumber.value);
+  console.log(passwordNumber.value);
+
+  const addUpperCase = upperCaseCheckBox.checked;
+  const addLowerCase = lowerCaseCheckBox.checked;
+  const addNumber = numberCheckBox.checked;
+  const addSymbol = specialCharCheckBox.checked;
+  password.value = generatePassword(
+    length,
+    addUpperCase,
+    addLowerCase,
+    addNumber,
+    addSymbol
+  );
+});
+
+function generatePassword(
+  length,
+  addUpperCase,
+  addLowerCase,
+  addNumber,
+  addSymbol
+) {
+  const upperCaseChar = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+  const lowercaseChar = "abcdefghijklmnopqrstuvwxyz";
+  const numberChar = "0123456789";
+  const symbolChar = "!@#$%^&*()_+[]{}|;:,.<>?";
+
+  let mixCharacter = "";
+  if (addUpperCase) {
+    mixCharacter += upperCaseChar;
+  }
+  if (addLowerCase) {
+    mixCharacter += lowercaseChar;
+  }
+  if (addNumber) {
+    mixCharacter += numberChar;
+  }
+  if (addSymbol) {
+    mixCharacter += symbolChar;
+  }
+  if (mixCharacter.length == 0 || length == 0) {
+    alert("ENTER A NUMBER PLEASE!!!");
+    return " ";
+  }
+
+  let password = "";
+  for (let i = 0; i < length; i++) {
+    const random = Math.floor(Math.random() * mixCharacter.length);
+    console.log(random);
+    password = password + mixCharacter[random];
+  }
+  return password;
+}
+contentHolder.appendChild(generate);
+nextDiv.appendChild(password);
 firstDiv.appendChild(contentHolder);
+firstDiv.appendChild(nextDiv);
