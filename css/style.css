@@ -17,17 +17,41 @@ h1 {
   display: flex;
   margin-left: 12px;
 }
+.upperCase:hover {
+  font-weight: bold;
+}
+.upperCase:active {
+  opacity: 50%;
+}
 .lowerCase {
   margin-left: 12px;
   display: flex;
+}
+.lowerCase:hover {
+  font-weight: bold;
+}
+.lowerCase:active {
+  opacity: 50%;
 }
 .number {
   margin-left: 12px;
   display: flex;
 }
+.number:hover {
+  font-weight: bold;
+}
+.number:active {
+  opacity: 50%;
+}
 .specialChar {
   margin-left: 12px;
   display: flex;
+}
+.specialChar:hover {
+  font-weight: bold;
+}
+.specialChar:active {
+  opacity: 50%;
 }
 .passwordNumber {
   display: inline-flex;

@@ -3,8 +3,7 @@ const contentHolder = document.createElement("div");
 contentHolder.classList.add("content");
 contentHolder.id = "content";
 // create uppercase
-const upperCase = document.createElement("label");
-// upperCase.for = "uppercase";
+const upperCase = document.createElement("div");
 upperCase.classList.add("upperCase");
 upperCase.id = "uppercase";
 const upperCaseCheckBox = document.createElement("input");
@@ -15,7 +14,7 @@ const upperCaseText = document.createElement("p");
 upperCaseText.innerHTML = "Uppercase";
 upperCase.appendChild(upperCaseText);
 // create lowercase
-const lowerCase = document.createElement("label");
+const lowerCase = document.createElement("div");
 lowerCase.classList.add("lowerCase");
 lowerCase.id = "lowercase";
 const lowerCaseCheckBox = document.createElement("input");
@@ -26,7 +25,7 @@ const lowerCaseText = document.createElement("p");
 lowerCaseText.innerHTML = "Lowercase";
 lowerCase.appendChild(lowerCaseText);
 // create number
-const number = document.createElement("label");
+const number = document.createElement("div");
 number.classList.add("number");
 number.id = "number";
 const numberCheckBox = document.createElement("input");
@@ -37,7 +36,7 @@ const numberText = document.createElement("p");
 numberText.innerHTML = "Number";
 number.appendChild(numberText);
 // create special character
-const specialChar = document.createElement("label");
+const specialChar = document.createElement("div");
 specialChar.classList.add("specialChar");
 specialChar.id = "specialChar";
 const specialCharCheckBox = document.createElement("input");
@@ -63,7 +62,6 @@ contentHolder.appendChild(passwordNumber);
 const password = document.createElement("input");
 password.id = "password";
 password.classList.add("password");
-password.setAttribute("readonly", "readonly");
 
 const nextDiv = document.createElement("div");
 const textbox = document.createElement("h4");
@@ -77,7 +75,7 @@ generate.innerHTML = "Generate Password";
 
 generate.addEventListener("click", () => {
   const length = parseInt(passwordNumber.value);
-  console.log("length " + passwordNumber.value);
+  console.log("value " + passwordNumber.value);
 
   const addUpperCase = upperCaseCheckBox.checked;
   const addLowerCase = lowerCaseCheckBox.checked;
@@ -91,6 +89,7 @@ generate.addEventListener("click", () => {
     addSymbol
   );
 });
+
 function generatePassword(
   length,
   addUpperCase,
@@ -98,52 +97,73 @@ function generatePassword(
   addNumber,
   addSymbol
 ) {
-  if (length <= 0) {
-    alert("Please enter number greater than 0");
-  }
-
+  // debugger;
   const upperCaseChar = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
   const lowercaseChar = "abcdefghijklmnopqrstuvwxyz";
   const numberChar = "0123456789";
   const symbolChar = "!@#$%^&*()_+[]{}|;:,.<>?";
-  const optionListWithoutShuffle = [
-    addUpperCase ? upperCaseChar : null,
-    addLowerCase ? lowercaseChar : null,
-    addNumber ? numberChar : null,
-    addSymbol ? symbolChar : null,
-  ].filter(Boolean);
-  if (optionListWithoutShuffle == 0) {
-    alert("ENTER ANY ONE OPTION!!");
-  }
-  const optionList = shuffle(optionListWithoutShuffle);
+
   let password = "";
-  console.log(optionList.length + " optionList checked ");
+  // if (addUpperCase) {
+  //   password += upperCaseChar[Math.floor(Math.random() * upperCaseChar.length)];
+  // }
+  // if (addLowerCase) {
+  //   password += lowercaseChar[Math.floor(Math.random() * lowercaseChar.length)];
+  // }
+  // if (addNumber) {
+  //   password += numberChar[Math.floor(Math.random() * numberChar.length)];
+  // }
+  // if (addSymbol) {
+  //   password += symbolChar[Math.floor(Math.random() * symbolChar.length)];
+  // }
+  // if (length == 0) {
+  //   alert("ENTER A NUMBER PLEASE!!!");
+  //   return " ";
+  // }
+  // debugger;
   for (let i = 0; i < length; i++) {
-    console.log(i + " i");
-    // debugger;
-    let optionIndex;
-    optionIndex = i % optionList.length;
-    const characterList = optionList[optionIndex];
-    console.log(optionIndex, characterList, " optionIndex");
-    const passwordCharacter =
-      characterList[Math.floor(Math.random() * characterList.length)];
-    console.log("password: ", passwordCharacter);
-
-    password += passwordCharacter;
-  }
-  return password;
-  function shuffle(array) {
-    for (let i = array.length - 1; i > 0; i--) {
-      const shuffling = Math.floor(Math.random() * (i + 1));
-      let j = array[i];
-      array[i] = array[shuffling];
-      array[shuffling] = j;
+    let newlength;
+    console.log(i);
+    let randomNumber = 0;
+    if (addUpperCase && randomNumber == 0 && length > 0) {
+      password +=
+        upperCaseChar[Math.floor(Math.random() * upperCaseChar.length)];
+      newlength = length - 1;
+      length = newlength;
     }
-    return array;
+    if (addLowerCase && randomNumber == 0 && length > 0) {
+      password +=
+        lowercaseChar[Math.floor(Math.random() * lowercaseChar.length)];
+      newlength = length - 1;
+      length = newlength;
+    }
+    if (addNumber && randomNumber == 0 && length > 0) {
+      password += numberChar[Math.floor(Math.random() * numberChar.length)];
+      newlength = length - 1;
+      length = newlength;
+    }
+    if (addSymbol && randomNumber == 0 && length > 0) {
+      password += symbolChar[Math.floor(Math.random() * symbolChar.length)];
+      newlength = length - 1;
+      length = newlength;
+    }
+    if (password.length == 0) {
+      alert("ENTER A NUMBER PLEASE!!!");
+      return " ";
+    }
+    length = newlength;
+    console.log(i);
+    console.log(password);
   }
-  //
+  length = parseInt(passwordNumber.value);
+  console.log("len" + length);
+  if ((length = password.length)) {
+    console.log("length now is " + length);
+    return password;
+  } else {
+    generatePassword();
+  }
 }
-
 contentHolder.appendChild(generate);
 nextDiv.appendChild(password);
 firstDiv.appendChild(contentHolder);
