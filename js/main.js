@@ -3,7 +3,8 @@ const contentHolder = document.createElement("div");
 contentHolder.classList.add("content");
 contentHolder.id = "content";
 // create uppercase
-const upperCase = document.createElement("div");
+const upperCase = document.createElement("label");
+// upperCase.for = "uppercase";
 upperCase.classList.add("upperCase");
 upperCase.id = "uppercase";
 const upperCaseCheckBox = document.createElement("input");
@@ -14,7 +15,7 @@ const upperCaseText = document.createElement("p");
 upperCaseText.innerHTML = "Uppercase";
 upperCase.appendChild(upperCaseText);
 // create lowercase
-const lowerCase = document.createElement("div");
+const lowerCase = document.createElement("label");
 lowerCase.classList.add("lowerCase");
 lowerCase.id = "lowercase";
 const lowerCaseCheckBox = document.createElement("input");
@@ -25,7 +26,7 @@ const lowerCaseText = document.createElement("p");
 lowerCaseText.innerHTML = "Lowercase";
 lowerCase.appendChild(lowerCaseText);
 // create number
-const number = document.createElement("div");
+const number = document.createElement("label");
 number.classList.add("number");
 number.id = "number";
 const numberCheckBox = document.createElement("input");
@@ -36,7 +37,7 @@ const numberText = document.createElement("p");
 numberText.innerHTML = "Number";
 number.appendChild(numberText);
 // create special character
-const specialChar = document.createElement("div");
+const specialChar = document.createElement("label");
 specialChar.classList.add("specialChar");
 specialChar.id = "specialChar";
 const specialCharCheckBox = document.createElement("input");
@@ -62,6 +63,7 @@ contentHolder.appendChild(passwordNumber);
 const password = document.createElement("input");
 password.id = "password";
 password.classList.add("password");
+password.setAttribute("readonly", "readonly");
 
 const nextDiv = document.createElement("div");
 const textbox = document.createElement("h4");
@@ -75,7 +77,7 @@ generate.innerHTML = "Generate Password";
 
 generate.addEventListener("click", () => {
   const length = parseInt(passwordNumber.value);
-  console.log("value" + passwordNumber.value);
+  console.log("length " + passwordNumber.value);
 
   const addUpperCase = upperCaseCheckBox.checked;
   const addLowerCase = lowerCaseCheckBox.checked;
@@ -89,7 +91,6 @@ generate.addEventListener("click", () => {
     addSymbol
   );
 });
-
 function generatePassword(
   length,
   addUpperCase,
@@ -101,35 +102,41 @@ function generatePassword(
   const lowercaseChar = "abcdefghijklmnopqrstuvwxyz";
   const numberChar = "0123456789";
   const symbolChar = "!@#$%^&*()_+[]{}|;:,.<>?";
-
+  const optionListWithoutShuffle = [
+    addUpperCase ? upperCaseChar : null,
+    addLowerCase ? lowercaseChar : null,
+    addNumber ? numberChar : null,
+    addSymbol ? symbolChar : null,
+  ].filter(Boolean);
+  const optionList = shuffle(optionListWithoutShuffle);
   let password = "";
-  // debugger;
+  console.log(optionList.length + " optionList checked ");
   for (let i = 0; i < length; i++) {
-    console.log(i);
-    if (addUpperCase) {
-      password +=
-        upperCaseChar[Math.floor(Math.random() * upperCaseChar.length)];
-    }
-    if (addLowerCase) {
-      password +=
-        lowercaseChar[Math.floor(Math.random() * lowercaseChar.length)];
-    }
-    if (addNumber) {
-      password += numberChar[Math.floor(Math.random() * numberChar.length)];
-    }
-    if (addSymbol) {
-      password += symbolChar[Math.floor(Math.random() * symbolChar.length)];
-    }
-    if (password.length == 0 || length == 0) {
-      alert("ENTER A NUMBER PLEASE!!!");
-      return " ";
-    }
-    console.log(i);
-    console.log(password);
-    // return password;
+    console.log(i + " i");
+    // debugger;
+    let optionIndex;
+    optionIndex = i % optionList.length;
+    const characterList = optionList[optionIndex];
+    console.log(optionIndex, characterList, " optionIndex");
+    const passwordCharacter =
+      characterList[Math.floor(Math.random() * characterList.length)];
+    console.log("password: ", passwordCharacter);
+
+    password += passwordCharacter;
   }
   return password;
+  function shuffle(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+      const shuffling = Math.floor(Math.random() * (i + 1));
+      let j = array[i];
+      array[i] = array[shuffling];
+      array[shuffling] = j;
+    }
+    return array;
+  }
+  //
 }
+
 contentHolder.appendChild(generate);
 nextDiv.appendChild(password);
 firstDiv.appendChild(contentHolder);
