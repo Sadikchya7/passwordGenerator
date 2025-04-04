@@ -1,7 +1,31 @@
+const nextDiv = document.createElement("div");
+nextDiv.classList.add("passwordHolder");
+//password display
+const password = document.createElement("input");
+password.id = "password";
+password.classList.add("password");
+password.setAttribute("readonly", "readonly");
+//generate button
+const generate = document.createElement("button");
+generate.type = "button";
+generate.classList.add("generate");
+generate.id = "generate";
+const img = document.createElement("img");
+img.classList.add("img");
+img.src = "img/regenerate.png";
+generate.appendChild(img);
+
+nextDiv.appendChild(password);
+nextDiv.appendChild(generate);
+
 const firstDiv = document.getElementById("main");
 const contentHolder = document.createElement("div");
 contentHolder.classList.add("content");
 contentHolder.id = "content";
+
+//option div
+const options = document.createElement("div");
+options.classList.add("options");
 // create uppercase
 const upperCase = document.createElement("label");
 // upperCase.for = "uppercase";
@@ -36,6 +60,7 @@ number.appendChild(numberCheckBox);
 const numberText = document.createElement("p");
 numberText.innerHTML = "Number";
 number.appendChild(numberText);
+
 // create special character
 const specialChar = document.createElement("label");
 specialChar.classList.add("specialChar");
@@ -48,32 +73,27 @@ const specialCharText = document.createElement("p");
 specialCharText.innerHTML = "Special Character";
 specialChar.appendChild(specialCharText);
 
+const custome = document.createElement("h3");
+custome.innerHTML = "Customize your password";
+options.appendChild(custome);
+options.appendChild(upperCase);
+options.appendChild(lowerCase);
+options.appendChild(number);
+options.appendChild(specialChar);
+
+//length div
+const lengthbox = document.createElement("div");
+lengthbox.classList.add("length");
+const textbox = document.createElement("h4");
+textbox.innerHTML = "Enter the length of Password you want.";
+lengthbox.appendChild(textbox);
+
 const passwordNumber = document.createElement("input");
 passwordNumber.setAttribute("type", "number");
 passwordNumber.id = "passwordNumber";
 passwordNumber.classList.add("passwordNumber");
 passwordNumber.placeholder = "Number of password";
-
-contentHolder.appendChild(upperCase);
-contentHolder.appendChild(lowerCase);
-contentHolder.appendChild(number);
-contentHolder.appendChild(specialChar);
-contentHolder.appendChild(passwordNumber);
-
-const password = document.createElement("input");
-password.id = "password";
-password.classList.add("password");
-password.setAttribute("readonly", "readonly");
-
-const nextDiv = document.createElement("div");
-const textbox = document.createElement("h4");
-textbox.innerHTML = "Password";
-nextDiv.appendChild(textbox);
-const generate = document.createElement("button");
-generate.type = "button";
-generate.classList.add("generate");
-generate.id = "generate";
-generate.innerHTML = "Generate Password";
+lengthbox.appendChild(passwordNumber);
 
 generate.addEventListener("click", () => {
   const length = parseInt(passwordNumber.value);
@@ -143,8 +163,8 @@ function generatePassword(
   }
   //
 }
+contentHolder.appendChild(options);
+contentHolder.appendChild(lengthbox);
 
-contentHolder.appendChild(generate);
-nextDiv.appendChild(password);
-firstDiv.appendChild(contentHolder);
 firstDiv.appendChild(nextDiv);
+firstDiv.appendChild(contentHolder);
